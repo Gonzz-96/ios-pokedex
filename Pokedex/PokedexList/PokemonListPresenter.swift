@@ -9,8 +9,16 @@ import Foundation
 
 class PokemonListPresenterImpl: PokemonListPresenter {
     var view: PokemonListView?
+    var interactor: PokemonListInteractor?
     
-    func doSomeShit() {
-        print("Hello from presenter!")
+    func fetchPokemons(limit: Int) {
+        interactor?.fetchPokemonList()
     }
 }
+
+let dummyPokemons = [
+    Pokemon(name: "Pikachu"),
+    Pokemon(name: "Bulbasaur"),
+    Pokemon(name: "Charmander"),
+    Pokemon(name: "Squirtel"),
+]

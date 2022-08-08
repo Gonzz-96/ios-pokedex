@@ -22,10 +22,15 @@ class PokemonListRouterImpl: PokemonListRouter {
         let router = PokemonListRouterImpl()
         var presenter: PokemonListPresenter = PokemonListPresenterImpl()
         var view: PokemonListView = PokemonListViewController()
+        var interactor: PokemonListInteractor = PokemonListInteractorImpl()
         
         view.presenter = presenter
         presenter.view = view
+        presenter.interactor = interactor
         router.view = view
+        interactor.view = view
+        
+        presenter.fetchPokemons(limit: 20)
         
         return router
     }

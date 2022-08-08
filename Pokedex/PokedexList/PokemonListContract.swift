@@ -9,10 +9,14 @@ import Foundation
 
 protocol PokemonListView {
     var presenter: PokemonListPresenter? { get set }
+    
+    func updateView(with pokemons: [Pokemon])
+    func updateView(with errorMessage: String)
 }
 
 protocol PokemonListPresenter {
     var view: PokemonListView? { get set }
+    var interactor: PokemonListInteractor? { get set }
     
-    func doSomeShit() // TODO remove
+    func fetchPokemons(limit: Int)
 }

@@ -11,6 +11,7 @@ import UIKit
 class PokemonListViewController: UIViewController, PokemonListView {
     
     var presenter: PokemonListPresenter?
+    private var pokemons = [Pokemon]()
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -26,21 +27,33 @@ class PokemonListViewController: UIViewController, PokemonListView {
         tableView.delegate = self
         view.addSubview(tableView)
     }
+    
+    func updateView(with pokemons: [Pokemon]) {
+        DispatchQueue.main.async {
+            self.pokemons = pokemons
+            self.tableView.reloadData()
+        }
+    }
+    
+    func updateView(with errorMessage: String) {
+        fatalError(errorMessage)
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension PokemonListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let pokemon = pokemons[indexPath.row]
         let cell = tableView.dequeueReusableCell(
             withIdentifier: Constants.pokemonCellIdentifier,
             for: indexPath
         )
-        cell.textLabel?.text = "Random text"
+        cell.textLabel?.text = pokemon.name
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        pokemons.count
     }
 }
