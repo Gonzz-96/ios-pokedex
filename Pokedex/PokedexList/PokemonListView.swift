@@ -56,4 +56,27 @@ extension PokemonListViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         pokemons.count
     }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        present(PokemonListViewController(), animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: nil,
+                                          actionProvider: {
+            suggestedActions in
+            let favoriteAction =
+            UIAction(title: "Add to Favorites",
+                     image: UIImage(systemName: "heart")) { action in
+                print(indexPath)
+            }
+            let detailsAction =
+            UIAction(title: "Details...",
+                     image: UIImage(systemName: "info")) { action in
+                print(indexPath)
+            }
+            return UIMenu(title: "", children: [favoriteAction, detailsAction])
+        })
+    }
 }
